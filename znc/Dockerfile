@@ -17,17 +17,23 @@ RUN cd znc-$VERSION && ./configure
 RUN cd znc-$VERSION && make
 RUN cd znc-$VERSION && make install
 
-RUN echo 'installing clientaway module...'
+RUN echo 'installing modules...'
+
+RUN curl -LO https://raw2.github.com/Palaver/znc-palaver/master/palaver.cpp
+RUN znc-buildmod palaver.cpp
+RUN cp palaver.so /usr/local/lib/znc/palaver.so
+
 RUN curl -LO https://raw.github.com/kylef/znc-contrib/master/clientaway.cpp
 RUN znc-buildmod clientaway.cpp
 RUN cp clientaway.so /usr/local/lib/znc/clientaway.so
 
-RUN echo 'removing support packages for znc...'
+RUN echo 'cleaning up...'
 RUN apt-get remove -y libssl-dev automake gettext g++ make
 RUN apt-get autoremove -y
 RUN apt-get clean
+RUN rm -rf znc-$VERSION znc-$VERSION.tar.gz
 
-RUN echo 'running znc...'
+RUN echo 'finishing...'
 ADD run /znc/run
 RUN chmod +x /znc/run
 
