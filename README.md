@@ -15,7 +15,6 @@ Version: 1.2
 
 Extra modules:
 
- * palaver
  * clientaway
 
 

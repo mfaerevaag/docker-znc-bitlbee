@@ -8,11 +8,6 @@ RUN apt-get install -y gettext
 RUN apt-get install -y g++
 RUN apt-get install -y make
 
-RUN curl http://znc.in/releases/znc-1.2.tar.gz > znc-1.2.tar.gz
-RUN tar zxf znc-1.2.tar.gz
-RUN cd znc-1.2 && ./configure
-RUN cd znc-1.2 && make
-RUN cd znc-1.2 && make install
 
 RUN curl https://raw2.github.com/Palaver/znc-palaver/master/palaver.cpp > palaver.cpp
 RUN znc-buildmod palaver.cpp
