@@ -22,24 +22,28 @@ RUN cd bitlbee-$VERSION && make install
 RUN cd bitlbee-$VERSION && make install-etc
 RUN cd bitlbee-$VERSION && make install-dev
 
+RUN echo 'installing skype4pidgin...'
+RUN curl -LO https://github.com/EionRobb/skype4pidgin/archive/1.1.tar.gz
+RUN tar zxvf 1.1.tar.gz
+RUN cd skype4pidgin-1.1/skypeweb && make
+RUN cd skype4pidgin-1.1/skypeweb && make install
+
 RUN echo 'installing bitlbee-facebook...'
-RUN curl -LO https://github.com/bitlbee/bitlbee-facebook/releases/download/v1.0.0/bitlbee-facebook-1.0.0.tar.gz
-RUN tar zxf bitlbee-facebook-1.0.0.tar.gz
+RUN curl -LO https://github.com/jgeboski/bitlbee-facebook/archive/v1.0.0.tar.gz
+RUN tar zxf v1.0.0.tar.gz
 RUN cd bitlbee-facebook-1.0.0 && ./autogen.sh
 RUN cd bitlbee-facebook-1.0.0 && make
 RUN cd bitlbee-facebook-1.0.0 && make install
 
-RUN echo 'removing support packages for bitlbee...'
-RUN apt-get remove -y libglib2.0-dev
-RUN apt-get remove -y libssl-dev
-RUN apt-get remove -y g++
-RUN apt-get remove -y make
-RUN apt-get remove -y xsltproc
-RUN apt-get remove -y xmlto
-RUN apt-get autoremove -y
+run echo 'cleaning up...'
+run rm -rf bitlbee-$VERSION bitlbee-$VERSION.tar.gz
+run rm -rf skype4pidgin-1.1 1.1.tar.gz
+run rm -rf bitlbee-facebook-1.0.0 v1.0.0.tar.gz
+RUN apt-get autoremove -y --purge autoconf automake gcc libtool make dpkg-dev
 RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /tmp/*
 
-RUN echo 'running bitlbee...'
+RUN echo 'finishing...'
 ADD run /bitlbee/run
 RUN chmod +x /bitlbee/run
 
