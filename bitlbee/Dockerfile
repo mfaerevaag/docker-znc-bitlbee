@@ -3,7 +3,7 @@ MAINTAINER  Jeff Smick <jeff@squishtech.com>
 
 ENV VERSION=3.4.2
 
-RUN echo 'preparing support packages...'
+RUN echo 'preparing support packages for bitlbee...'
 RUN apt-get update
 RUN apt-get install -y libglib2.0-dev
 RUN apt-get install -y libssl-dev
@@ -12,7 +12,7 @@ RUN apt-get install -y make
 RUN apt-get install -y xsltproc
 RUN apt-get install -y xmlto
 
-RUN echo 'creating /bitlbee dirs...'
+RUN echo 'creating /bitlbee...'
 RUN mkdir -p /bitlbee/bin
 RUN mkdir -p /bitlbee/state/configs
 
@@ -32,7 +32,7 @@ RUN cd bitlbee-facebook-1.0.0 && make
 RUN cd bitlbee-facebook-1.0.0 && make install
 RUN rm -rf bitlbee-facebook-1.0.0 bitlbee-facebook-1.0.0.tar.gz
 
-RUN echo 'removing support packages...'
+RUN echo 'removing support packages for bitlbee...'
 RUN apt-get remove -y libglib2.0-dev
 RUN apt-get remove -y libssl-dev
 RUN apt-get remove -y g++
@@ -42,7 +42,7 @@ RUN apt-get remove -y xmlto
 RUN apt-get autoremove -y
 RUN apt-get clean
 
-RUN echo 'running...'
+RUN echo 'running bitlbee...'
 ADD run /bitlbee/run
 RUN chmod +x /bitlbee/run
 
