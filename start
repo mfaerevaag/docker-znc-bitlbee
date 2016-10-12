@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
-sudo docker run -d --name bitlbee -v /etc/state/bitlbee:/bitlbee/state sprsquish/bitlbee:latest
-sudo docker run -d --name znc --link bitlbee:bitlbee -p 6668:6668 -v /etc/state/znc:/znc/state sprsquish/znc:latest
+docker run -d --name bitlbee -v /etc/state/bitlbee:/bitlbee/state sprsquish/bitlbee:latest
+docker run -d --name znc --link bitlbee:bitlbee -p 6668:6668 -v /etc/state/znc:/znc/state sprsquish/znc:latest

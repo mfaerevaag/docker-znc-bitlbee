@@ -16,8 +16,8 @@ if [ ! -d ${ZNC_ROOT}/configs ]; then
 fi;
 
 if [ ! -e ${ZNC_ROOT}/znc.pem ]; then
-  openssl req -nodes -newkey rsa:2048 -keyout ${ZNC_ROOT}/znc.pem -x509 -days 365 -out ${ZNC_ROOT}/znc.crt
-  cat ${ZNC_ROOT}/znc.crt >> ${ZNC_ROOT}/znc.pem
+    openssl req -nodes -newkey rsa:2048 -keyout ${ZNC_ROOT}/znc.pem -x509 -days 365 -out ${ZNC_ROOT}/znc.crt
+    cat ${ZNC_ROOT}/znc.crt >> ${ZNC_ROOT}/znc.pem
 fi;
 
 if [ ! -e $CONFIG_FILE ]; then
@@ -135,5 +135,5 @@ EOF
 
 fi;
 
-sudo docker pull sprsquish/bitlbee
-sudo docker pull sprsquish/znc
+docker pull sprsquish/bitlbee
+docker pull sprsquish/znc
