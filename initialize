@@ -74,7 +74,7 @@ Version = 1.4
   StatusPrefix = *
 
   <Network sorcery>
-    AltNick = Kolth_
+    AltNick = slevin_
     FloodBurst = 4
     FloodRate = 1.00
     IRCConnectEnabled = true
@@ -84,12 +84,11 @@ Version = 1.4
     LoadModule = nickserv
     LoadModule = perform
     LoadModule = simple_away
-    Nick = Kolth
-    RealName = Kolth
-    Server = aesir.sorcery.net +6697
-    Server = aesir.sorcery.net +9999
-    
-    <Chan #acdev>
+    Nick = slevin
+    RealName = slevin
+    Server = irc.freenode.net +6697
+
+    <Chan ##security>
     </Chan>
   </Network>
 
