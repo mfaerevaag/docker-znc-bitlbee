@@ -1,28 +1,26 @@
-FROM        ubuntu:12.04
-MAINTAINER  Jeff Smick <jeff@squishtech.com>
+FROM        buildpack-deps:jessie-curl
+MAINTAINER  Markus Faerevaag <m@frv.ag>
 
 ENV VERSION=3.4.2
 
 RUN echo 'preparing support packages for bitlbee...'
 RUN apt-get update
-RUN apt-get install -y libglib2.0-dev
-RUN apt-get install -y libssl-dev
-RUN apt-get install -y g++
-RUN apt-get install -y make
-RUN apt-get install -y xsltproc
-RUN apt-get install -y xmlto
+RUN apt-get install -y --no-install-recommends \
+    autoconf automake gettext gcc libtool make dpkg-dev libglib2.0-dev \
+    libotr5-dev libpurple-dev libgnutls28-dev libjson-glib-dev libssl-dev
 
 RUN echo 'creating /bitlbee...'
 RUN mkdir -p /bitlbee/bin
 RUN mkdir -p /bitlbee/state/configs
 
-RUN echo 'installing bitlbee-v$VERSION...'
-RUN curl -O http://get.bitlbee.org/src/bitlbee-$VERSION.tar.gz
+RUN echo "installing bitlbee-v${VERSION}..."
+RUN curl -LO http://get.bitlbee.org/src/bitlbee-$VERSION.tar.gz
 RUN tar zxf bitlbee-$VERSION.tar.gz
-RUN cd bitlbee-$VERSION && ./configure --ssl=openssl --otr=1 --purple=1
+RUN cd bitlbee-$VERSION && ./configure --ssl=openssl --jabber=1 --otr=1 --purple=1
 RUN cd bitlbee-$VERSION && make
 RUN cd bitlbee-$VERSION && make install
-RUN rm -rf bitlbee-$VERSION bitlbee-$VERSION.tar.gz
+RUN cd bitlbee-$VERSION && make install-etc
+RUN cd bitlbee-$VERSION && make install-dev
 
 RUN echo 'installing bitlbee-facebook...'
 RUN curl -LO https://github.com/bitlbee/bitlbee-facebook/releases/download/v1.0.0/bitlbee-facebook-1.0.0.tar.gz
@@ -30,6 +28,9 @@ RUN tar zxf bitlbee-facebook-1.0.0.tar.gz
 RUN cd bitlbee-facebook-1.0.0 && ./autogen.sh
 RUN cd bitlbee-facebook-1.0.0 && make
 RUN cd bitlbee-facebook-1.0.0 && make install
+
+RUN echo 'cleaning tarballs...'
+RUN rm -rf bitlbee-$VERSION bitlbee-$VERSION.tar.gz
 RUN rm -rf bitlbee-facebook-1.0.0 bitlbee-facebook-1.0.0.tar.gz
 
 RUN echo 'removing support packages for bitlbee...'

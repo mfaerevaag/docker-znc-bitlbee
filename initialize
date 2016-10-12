@@ -135,5 +135,5 @@ EOF
 
 fi;
 
-docker pull sprsquish/bitlbee
-docker pull sprsquish/znc
+docker pull mfaerevaag/bitlbee
+docker pull mfaerevaag/znc
