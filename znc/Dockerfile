@@ -22,9 +22,6 @@ RUN curl -LO https://raw.github.com/kylef/znc-contrib/master/clientaway.cpp
 RUN znc-buildmod clientaway.cpp
 RUN cp clientaway.so /usr/local/lib/znc/clientaway.so
 
-RUN echo 'cleaning tarballs...'
-RUN rm -rf znc-$VERSION.tar.gz znc-$VERSION
-
 RUN echo 'removing support packages for znc...'
 RUN apt-get remove -y libssl-dev automake gettext g++ make
 RUN apt-get autoremove -y

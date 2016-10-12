@@ -29,10 +29,6 @@ RUN cd bitlbee-facebook-1.0.0 && ./autogen.sh
 RUN cd bitlbee-facebook-1.0.0 && make
 RUN cd bitlbee-facebook-1.0.0 && make install
 
-RUN echo 'cleaning tarballs...'
-RUN rm -rf bitlbee-$VERSION bitlbee-$VERSION.tar.gz
-RUN rm -rf bitlbee-facebook-1.0.0 bitlbee-facebook-1.0.0.tar.gz
-
 RUN echo 'removing support packages for bitlbee...'
 RUN apt-get remove -y libglib2.0-dev
 RUN apt-get remove -y libssl-dev
