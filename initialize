@@ -22,18 +22,17 @@ fi;
 
 if [ ! -e $CONFIG_FILE ]; then
 
-if [ $# -lt 3 ]; then
-    echo "Usage: $0 <USER> <PASSWORD> <BITLBEE>"
-    exit 1
-fi;
+    if [ $# -lt 3 ]; then
+        echo "Usage: $0 <USER> <PASSWORD> <BITLBEE>"
+        exit 1
+    fi;
 
-ZNC_SALT="$(dd if=/dev/urandom bs=16c count=1 | md5sum | awk '{print $1}')"
-ZNC_HASH="$(echo -n ${ZNC_PASS}${ZNC_SALT} | sha256sum | awk '{print $1}')"
+    ZNC_SALT="$(dd if=/dev/urandom bs=16c count=1 | md5sum | awk '{print $1}')"
+    ZNC_HASH="$(echo -n ${ZNC_PASS}${ZNC_SALT} | sha256sum | awk '{print $1}')"
 
-cat<<EOF > ${CONFIG_FILE}
+    cat<<EOF > ${CONFIG_FILE}
 AnonIPLimit = 10
 ConnectDelay = 5
-LoadModule = palaver
 LoadModule = partyline
 MaxBufferSize = 1000
 ProtectWebSessions = true
@@ -64,7 +63,6 @@ Version = 1.4
   LoadModule = controlpanel
   LoadModule = chansaver
   LoadModule = clientaway
-  LoadModule = perform
   LoadModule = webadmin
   MaxNetworks = 1
   MultiClients = true
@@ -73,7 +71,7 @@ Version = 1.4
   QuitMsg = Goodbye
   StatusPrefix = *
 
-  <Network sorcery>
+  <Network freenode>
     AltNick = slevin_
     FloodBurst = 4
     FloodRate = 1.00
@@ -82,7 +80,6 @@ Version = 1.4
     LoadModule = keepnick
     LoadModule = kickrejoin
     LoadModule = nickserv
-    LoadModule = perform
     LoadModule = simple_away
     Nick = slevin
     RealName = slevin
@@ -125,7 +122,7 @@ fi;
 
 if [ ! -e ${BITLBEE_ROOT}/configs/bitlbee.conf ]; then
 
-cat<<EOF > ${BITLBEE_ROOT}/configs/bitlbee.conf
+    cat<<EOF > ${BITLBEE_ROOT}/configs/bitlbee.conf
 [settings]
 AuthMode = Closed
 AuthPassword = $BITLBEE_PASS

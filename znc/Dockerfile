@@ -1,7 +1,7 @@
 FROM        ubuntu:12.04
 MAINTAINER  Markus Faerevaag <m@frv.ag>
 
-env VERSION=1.2
+env VERSION=1.4
 
 RUN echo 'preparing support packages for znc...'
 RUN apt-get update
@@ -18,14 +18,9 @@ RUN cd znc-$VERSION && make
 RUN cd znc-$VERSION && make install
 
 RUN echo 'installing modules...'
-
-RUN curl -LO https://raw2.github.com/Palaver/znc-palaver/master/palaver.cpp
-RUN znc-buildmod palaver.cpp
-RUN cp palaver.so /usr/local/lib/znc/palaver.so
-
-RUN curl -LO https://raw.github.com/kylef/znc-contrib/master/clientaway.cpp
+RUN curl -LO https://raw.githubusercontent.com/kylef/znc-contrib/master/clientaway.cpp
 RUN znc-buildmod clientaway.cpp
-RUN cp clientaway.so /usr/local/lib/znc/clientaway.so
+RUN cp clientaway.so /usr/local/lib/znc/
 
 RUN echo 'cleaning up...'
 RUN apt-get remove -y libssl-dev automake gettext g++ make
